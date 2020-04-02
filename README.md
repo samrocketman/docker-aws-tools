@@ -55,6 +55,24 @@ AWS Tools Provided:
 Makefile into your own projects and reference your own development docker
 container.
 
+You can install this into your system for development as an `aws-tools` command.
+Please note, the following commands are meant to be run from the root of this
+repository so that it properly evaluates the path.
+
+On Linux,
+
+    echo "alias aws-tools='make -f \"$PWD\"/Makefile.alternate'" >> ~/.bashrc
+
+On Mac OS X,
+
+    echo "alias aws-tools='make -f \"$PWD\"/Makefile.alternate'" >> ~/.bash_profile
+
+The next time you open your terminal you'll have the `aws-tools` command
+available.
+
+    aws-tools cli
+    aws-tools gui
+
 [MIT Licensed](LICENSE.txt)
 
 [XQ]: https://www.xquartz.org/
