@@ -6,6 +6,7 @@ computer without having to install all of the heavy requirements directly.
 Features:
 
 * Get started with developing AWS infrastructure code quickly.
+* Integrates with your shell environment for any project.
 * Running VS Code IDE from inside of the docker container.
 * Fast cleanup, just delete the docker container.
 
