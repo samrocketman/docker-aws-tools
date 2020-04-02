@@ -46,7 +46,7 @@ System tools:
 AWS Tools Provided:
 
 | Latest version | Additional Information |
-| ============== | ====================== |
+| -------------- | ---------------------- |
 | ![CDK current version](https://img.shields.io/node/v/aws-cdk?label=aws-cdk)        | [AWS CDK][cdk] |
 | ![CLI current version](https://img.shields.io/pypi/v/awscli?label=awscli)          | [AWS CLI][cli] |
 | ![cfn-lint current version](https://img.shields.io/pypi/v/cfn-lint?label=cfn-lint) | [cfn-lint][lint] - a CloudFormation stack linter. |
