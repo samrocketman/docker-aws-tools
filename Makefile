@@ -20,7 +20,7 @@ clean:
 	@echo 'Also run "docker image prune" for additional cleanup.'
 
 requirements:
-	@/bin/bash -lc 'type -p docker' > /dev/null || (echo 'ERROR: Docker needs to be installed.  If on Mac OS X, install Docker for Mac.' >&2; false)
+	@/bin/bash -lc 'type docker' > /dev/null || (echo 'ERROR: Docker needs to be installed.  If on Mac OS X, install Docker for Mac.' >&2; false)
 
 ~/.aws:
 	[ -d ~/.aws ] || mkdir -p ~/.aws
@@ -33,20 +33,20 @@ requirements:
 
 cli: build ~/.aws ~/.gitconfig ~/.ssh
 	docker run -it --rm \
-	-v ~/.ssh:/home/aws-user/.ssh \
-	-v ~/.gitconfig:/home/aws-user/.gitconfig \
-	-v ~/.aws:/home/aws-user/.aws \
-	-v $(PWD):/mnt \
-	-w /mnt aws-tools
+		-v ~/.ssh:/home/aws-user/.ssh \
+		-v ~/.gitconfig:/home/aws-user/.gitconfig \
+		-v ~/.aws:/home/aws-user/.aws \
+		-v $(PWD):/mnt \
+		-w /mnt aws-tools
 
 gui: build osx-display ~/.aws ~/.gitconfig ~/.ssh
 	docker run --rm -tie DISPLAY=$(MAKE_DISPLAY) \
-	-v ~/.ssh:/home/aws-user/.ssh \
-	-v ~/.gitconfig:/home/aws-user/.gitconfig \
-	-v ~/.aws:/home/aws-user/.aws \
-	-v /tmp/.X11-unix:/tmp/.X11-unix \
-	-v $(PWD):/mnt \
-	-w /mnt aws-tools code -w /mnt
+		-v ~/.ssh:/home/aws-user/.ssh \
+		-v ~/.gitconfig:/home/aws-user/.gitconfig \
+		-v ~/.aws:/home/aws-user/.aws \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		-v $(PWD):/mnt \
+		-w /mnt aws-tools code -w /mnt
 
 build: requirements
 	docker build . -t aws-tools
