@@ -1,4 +1,4 @@
-# Common AWS Dev Tools
+# Common AWS Dev Tools [![Build Status][build-status]][build-url]
 
 This provides a neat package for having AWS development utilities on your
 computer without having to install all of the heavy requirements directly.
@@ -76,6 +76,8 @@ available.
 [XQ]: https://www.xquartz.org/
 [X]: https://www.x.org/
 [Yelp]: https://github.com/Yelp/dumb-init
+[build-status]: https://travis-ci.com/samrocketman/docker-aws-tools.svg?branch=master
+[build-url]: https://travis-ci.com/samrocketman/docker-aws-tools
 [cdk]: https://aws.amazon.com/cdk/
 [cent]: https://www.centos.org/about/
 [cli]: https://aws.amazon.com/cli/
