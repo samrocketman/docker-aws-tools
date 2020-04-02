@@ -74,6 +74,12 @@ available.
     aws-tools cli
     aws-tools gui
 
+# Screenshot
+
+Running VS Code from a docker container on Pop! OS 18.04 GNU/Linux.
+
+![screenshot](screenshot.png)
+
 [MIT Licensed](LICENSE.txt)
 
 [XQ]: https://www.xquartz.org/
