@@ -49,11 +49,7 @@ AWS Tools Provided:
 * [AWS CLI][cli]
 * [cfn-lint][lint] - a CloudFormation stack linter.
 
-# Finally
-
-[`Makefile.alternate`](Makefile.alternate) is provided so that you can copy a
-Makefile into your own projects and reference your own development docker
-container.
+# aws-tools command alias
 
 You can install this into your system for development as an `aws-tools` command.
 Please note, the following commands are meant to be run from the root of this
