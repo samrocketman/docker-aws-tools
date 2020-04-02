@@ -33,25 +33,40 @@ chmod 755 /usr/local/bin/dumb-init
 
 # Install jq utility
 RUN set -ex; \
-SHASUM=af986793a515d500ab2d35f8d2aecd656e764504b789b66d7e1a0b727a124c44; \
+version=1.6; \
+hash=af986793a515d500ab2d35f8d2aecd656e764504b789b66d7e1a0b727a124c44; \
 INSTALL=/usr/local/bin/jq; \
-URL=https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64; \
+URL=https://github.com/stedolan/jq/releases/download/jq-"$version"/jq-linux64; \
 curl -sfLo "${INSTALL}" "${URL}"; \
-sha256sum -c - <<< "${SHASUM}  ${INSTALL}"; \
+sha256sum -c - <<< "${hash}  ${INSTALL}"; \
 chmod 755 "${INSTALL}"
 
 
 # Install goss utility
 RUN set -ex; \
-SHASUM=53dd1156ab66f2c4275fd847372e6329d895cfb2f0bcbec5f86c1c4df7236dde; \
+version=0.3.6; \
+hash=53dd1156ab66f2c4275fd847372e6329d895cfb2f0bcbec5f86c1c4df7236dde; \
 INSTALL=/usr/local/bin/goss; \
-URL=https://github.com/aelsabbahy/goss/releases/download/v0.3.6/goss-linux-amd64; \
+URL=https://github.com/aelsabbahy/goss/releases/download/v"$version"/goss-linux-amd64; \
 curl -sfLo "${INSTALL}" "${URL}"; \
-sha256sum -c - <<< "${SHASUM}  ${INSTALL}"; \
+sha256sum -c - <<< "${hash}  ${INSTALL}"; \
 chmod 755 "${INSTALL}"
 
 ################################################################################
 # Install AWS Tools
+# Install saml2aws utility
+RUN set -ex; \
+version=2.25.0; \
+hash=7833036459ef76558ec91bebaa8f3d3d7ecf95d163d1253c1010aa92e0bbcf57; \
+INSTALL=/usr/local/bin/saml2aws; \
+curl -fLo /tmp/saml2aws.tgz https://github.com/Versent/saml2aws/releases/download/v"$version"/saml2aws_"$version"_linux_amd64.tar.gz; \
+cd /usr/local/bin; \
+tar -xzf /tmp/saml2aws.tgz; \
+rm /tmp/saml2aws.tgz; \
+#sha256sum "${INSTALL}"; \
+sha256sum -c - <<< "${hash}  ${INSTALL}"; \
+chmod 755 "${INSTALL}"
+
 RUN set -ex; \
 pip3 install awscli cfn-lint
 
