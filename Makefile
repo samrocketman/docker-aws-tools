@@ -11,7 +11,7 @@ endif
 help:
 	@echo 'The following make commands are available'
 	@echo '    make cli   - shows a CLI.'
-	@echo '    make gui   - shows a VS Code (requires X11 or XQuartz on Mac).'
+	@echo '    make gui   - shows a VS Code editor (requires X11 or XQuartz on Mac).'
 	@echo '    make test  - runs infra tests against the aws-tools docker image.'
 	@echo '    make clean - Removes docker image created.'
 
@@ -34,7 +34,7 @@ gui: build osx-display ~/.aws
 build: requirements
 	docker build . -t aws-tools
 
-test:
+test: build
 	docker run --rm -iu root aws-tools /usr/local/bin/goss -g - validate < goss.yaml
 
 osx-display:

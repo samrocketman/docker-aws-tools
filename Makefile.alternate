@@ -12,7 +12,7 @@ endif
 help:
 	@echo 'The following make commands are available'
 	@echo '    make cli   - shows a CLI.'
-	@echo '    make gui   - shows a VS Code (requires X11 or XQuartz on Mac).'
+	@echo '    make gui   - shows a VS Code editor (requires X11 or XQuartz on Mac).'
 
 requirements:
 	@type -p docker > /dev/null || (echo 'ERROR: Docker needs to be installed.' >&2; false)
