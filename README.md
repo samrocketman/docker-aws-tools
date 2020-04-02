@@ -45,9 +45,12 @@ System tools:
 
 AWS Tools Provided:
 
-* [AWS CDK][cdk] ![CDK current version](https://img.shields.io/node/v/aws-cdk?label=aws-cdk)
-* [AWS CLI][cli] ![CLI current version](https://img.shields.io/pypi/v/awscli?label=awscli)
-* [cfn-lint][lint] ![cfn-lint current version](https://img.shields.io/pypi/v/cfn-lint?label=cfn-lint)
+* ![CDK current version](https://img.shields.io/node/v/aws-cdk?label=aws-cdk)
+  [AWS CDK][cdk]
+* ![CLI current version](https://img.shields.io/pypi/v/awscli?label=awscli)
+  [AWS CLI][cli]
+* ![cfn-lint current version](https://img.shields.io/pypi/v/cfn-lint?label=cfn-lint)
+  [cfn-lint][lint] - a CloudFormation stack linter.
 
 # aws-tools command alias
 
