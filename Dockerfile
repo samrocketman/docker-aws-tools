@@ -85,11 +85,15 @@ USER aws-user
 WORKDIR /home/aws-user
 
 RUN set -ex; \
-mkdir -p ~/usr/bin ~/git; \
+mkdir -p ~/usr/share ~/usr/bin ~/git; \
 cd ~/git; \
 git clone https://github.com/samrocketman/home.git; \
 cd home; \
-./setup.sh
+./setup.sh; \
+cd ~/usr/share; \
+git clone https://github.com/samrocketman/git-identity-manager.git; \
+cd git-identity-manager; \
+ln -s "$PWD"/git-idm ~/usr/bin/git-idm
 
 ################################################################################
 # Default Docker runtime
