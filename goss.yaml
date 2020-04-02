@@ -31,6 +31,20 @@ file:
     linked-to: /usr/share/code/bin/code
     filetype: symlink
     contains: []
+  /usr/bin/ssh:
+    exists: true
+    mode: "0755"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
+  /usr/bin/ssh-agent:
+    exists: true
+    mode: "0755"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
   /usr/local/bin/aws:
     exists: true
     mode: "0755"
@@ -84,10 +98,19 @@ file:
     linked-to: /etc/alternatives/npx
     filetype: symlink
     contains: []
+  /usr/local/bin/saml2aws:
+    exists: true
+    mode: "0755"
+    owner: aws-user
+    group: aws-user
+    filetype: file
+    contains: []
 package:
   code:
     installed: true
   git:
+    installed: true
+  openssh:
     installed: true
 user:
   aws-user:
@@ -121,6 +144,11 @@ command:
     stderr: []
     timeout: 10000
   jq --version:
+    exit-status: 0
+    stdout: []
+    stderr: []
+    timeout: 10000
+  saml2aws --version:
     exit-status: 0
     stdout: []
     stderr: []
