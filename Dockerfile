@@ -1,25 +1,28 @@
 FROM centos:8
 
+################################################################################
 # VS Code Visual Studio IDE
 RUN set -ex; \
 rpm --import https://packages.microsoft.com/keys/microsoft.asc; \
 sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'; \
-dnf install -y code; \
+dnf install -y libX11-xcb code; \
 dnf clean all; \
 rm -rf /tmp/*
 
 ################################################################################
-# Install packages, upgrade git because it's too old for Jenkins, and fix locale
+# Install system packages
 RUN set -ex; \
 dnf install -y bind-utils bzip2 ca-certificates curl-devel nmap-ncat openssl \
-openssl-devel psmisc python3 rsyslog sudo wget which vim man git intltool; \
+openssl-devel psmisc python3 rsyslog sudo wget which vim man git; \
 # fix locale
-dnf install -y glibc-locale-source glibc-langpack-en; \
+dnf install -y glibc-locale-source glibc-langpack-en intltool; \
 localedef -i en_US -f UTF-8 en_US.UTF-8; \
 tee /etc/sysconfig/i18n <<<'"LANG=en_US.UTF-8"'; \
 yum clean all; \
 rm -rf /tmp/*
 
+################################################################################
+# Install Go binaries
 # install dumb-init
 RUN set -ex; \
 version=1.2.2; \
@@ -47,14 +50,15 @@ curl -sfLo "${INSTALL}" "${URL}"; \
 sha256sum -c - <<< "${SHASUM}  ${INSTALL}"; \
 chmod 755 "${INSTALL}"
 
-# Install AWS CLI
+################################################################################
+# Install AWS Tools
 RUN set -ex; \
 pip3 install awscli cfn-lint
 
 # Install AWS CDK
 RUN set -ex; \
-version=v10.19.0; \
-hash=34127c7c6b1ba02d6d4dc3a926f38a5fb88bb37fc7f051349005ce331c7a53c6; \
+version=v12.16.1; \
+hash=b826753f14df9771609ffb8e7d2cc4cb395247cb704cf0cea0f04132d9cf3505; \
 curl --fail --compressed -q -L -C - --progress-bar https://nodejs.org/dist/"$version"/node-"$version"-linux-x64.tar.xz -o /tmp/node.tar.xz; \
 #sha256sum /tmp/node.tar.xz; \
 sha256sum -c - <<< "$hash  /tmp/node.tar.xz"; \
@@ -67,16 +71,15 @@ update-alternatives --install /usr/local/bin/"$x" "$x" /opt/node/bin/"$x" 1; \
 update-alternatives --set "$x" /opt/node/bin/"$x"; \
 done; \
 npm install -g aws-cdk; \
-update-alternatives --install /usr/local/bin/cdk cdk /opt/node/lib/node_modules/aws-cdk/bin/cdk 1; \
-update-alternatives --set cdk /opt/node/lib/node_modules/aws-cdk/bin/cdk; \
+update-alternatives --install /usr/local/bin/cdk cdk /opt/node/bin/cdk 1; \
+update-alternatives --set cdk /opt/node/bin/cdk; \
 rm -rf /tmp/*
 
+################################################################################
+# Create and configure user account
 RUN useradd -m -s /bin/bash -G wheel -d /home/aws-user aws-user && \
 chown -R aws-user. /usr/local; \
 echo '%wheel         ALL = (ALL) NOPASSWD: ALL' > /etc/sudoers.d/wheel
-
-RUN set -ex; \
-dnf install -y libX11-xcb
 
 USER aws-user
 WORKDIR /home/aws-user
@@ -88,5 +91,7 @@ git clone https://github.com/samrocketman/home.git; \
 cd home; \
 ./setup.sh
 
+################################################################################
+# Default Docker runtime
 ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
 CMD /bin/bash
