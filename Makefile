@@ -6,7 +6,7 @@ else
 	MAKE_DISPLAY := $(DISPLAY)
 endif
 
-.PHONY: build clean cli gui help osx-display requirements test ~/.aws ~/.gitconfig
+.PHONY: build clean cli gui help osx-display requirements test ~/.aws ~/.gitconfig ~/.ssh
 
 help:
 	@echo 'The following make commands are available'
@@ -28,15 +28,20 @@ requirements:
 ~/.gitconfig:
 	[ -f ~/.gitconfig ] || touch ~/.gitconfig
 
-cli: build ~/.aws ~/.gitconfig
+~/.ssh:
+	[ -d ~/.ssh ] || ( mkdir -p ~/.ssh; chmod 700 ~/.ssh )
+
+cli: build ~/.aws ~/.gitconfig ~/.ssh
 	docker run -it --rm \
+	-v ~/.ssh:/home/aws-user/.ssh \
 	-v ~/.gitconfig:/home/aws-user/.gitconfig \
 	-v ~/.aws:/home/aws-user/.aws \
 	-v $(PWD):/mnt \
 	-w /mnt aws-tools
 
-gui: build osx-display ~/.aws ~/.gitconfig
+gui: build osx-display ~/.aws ~/.gitconfig ~/.ssh
 	docker run --rm -tie DISPLAY=$(MAKE_DISPLAY) \
+	-v ~/.ssh:/home/aws-user/.ssh \
 	-v ~/.gitconfig:/home/aws-user/.gitconfig \
 	-v ~/.aws:/home/aws-user/.aws \
 	-v /tmp/.X11-unix:/tmp/.X11-unix \
