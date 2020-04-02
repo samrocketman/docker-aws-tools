@@ -82,7 +82,7 @@ Running VS Code from a docker container on Pop! OS 18.04 GNU/Linux.
 
 # Troubleshooting
 
-Q: Slowness of VS Code on Mac OS X when running `make gui` or `aws-cli gui`.
+Q: Slowness of VS Code on Mac OS X when running `make gui` or `aws-tools gui`.
 
 * A: Not much I can do about that with XQuartz.  There's currently an [open
   XQuartz issue][xquartz-slowness].  Consider X11 support for this
