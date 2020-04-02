@@ -5,8 +5,9 @@ computer without having to install all of the heavy requirements directly.
 
 Features:
 
-* A full development environment for AWS infrastructure as code.
+* Get started with developing AWS infrastructure code quickly.
 * Running VS Code IDE from inside of the docker container.
+* Fast cleanup, just delete the docker container.
 
 # Usage
 
@@ -27,7 +28,7 @@ The following make commands are available
 
 # What is available?
 
-CentOS 8 is the operating system.
+[CentOS 8][cent] is the operating system provided with root access via sudo.
 
 System tools:
 
@@ -48,12 +49,19 @@ AWS Tools Provided:
 * [AWS CLI][cli]
 * [cfn-lint][lint] - a CloudFormation stack linter.
 
+# Finally
+
+[`Makefile.alternate`](Makefile.alternate) is provided so that you can copy a
+Makefile into your own projects and reference your own development docker
+container.
+
 [MIT Licensed](LICENSE.txt)
 
 [XQ]: https://www.xquartz.org/
 [X]: https://www.x.org/
 [Yelp]: https://github.com/Yelp/dumb-init
 [cdk]: https://aws.amazon.com/cdk/
+[cent]: https://www.centos.org/about/
 [cli]: https://aws.amazon.com/cli/
 [code]: https://code.visualstudio.com/
 [git]: https://git-scm.com/
