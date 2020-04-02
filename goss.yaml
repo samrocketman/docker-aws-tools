@@ -14,7 +14,15 @@ file:
     owner: root
     group: root
     filetype: file
-    contains: ['"LANG=en_US.UTF-8"']
+    contains:
+    - '"LANG=en_US.UTF-8"'
+  /etc/yum.repos.d/vscode.repo:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: []
   /usr/bin/code:
     exists: true
     mode: "0777"
@@ -91,3 +99,29 @@ user:
     - wheel
     home: /home/aws-user
     shell: /bin/bash
+command:
+  aws --version:
+    exit-status: 0
+    stdout: []
+    stderr: []
+    timeout: 10000
+  cdk --version:
+    exit-status: 0
+    stdout: []
+    stderr: []
+    timeout: 10000
+  dumb-init --version:
+    exit-status: 0
+    stdout: []
+    stderr: []
+    timeout: 10000
+  goss --version:
+    exit-status: 0
+    stdout: []
+    stderr: []
+    timeout: 10000
+  jq --version:
+    exit-status: 0
+    stdout: []
+    stderr: []
+    timeout: 10000
