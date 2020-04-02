@@ -20,7 +20,7 @@ clean:
 	@echo 'Also run "docker image prune" for additional cleanup.'
 
 requirements:
-	@type -p docker > /dev/null || (echo 'ERROR: Docker needs to be installed.' >&2; false)
+	@type -p docker > /dev/null || (echo 'ERROR: Docker needs to be installed.  If on Mac OS X, install Docker for Mac.' >&2; false)
 
 ~/.aws:
 	[ -d ~/.aws ] || mkdir -p ~/.aws
