@@ -57,10 +57,12 @@ repository so that it properly evaluates the path.
 
 On Linux,
 
+    make build
     echo "alias aws-tools='make -f \"$PWD\"/Makefile.alternate'" >> ~/.bashrc
 
 On Mac OS X,
 
+    make build
     echo "alias aws-tools='make -f \"$PWD\"/Makefile.alternate'" >> ~/.bash_profile
 
 The next time you open your terminal you'll have the `aws-tools` command
