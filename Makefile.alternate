@@ -20,11 +20,23 @@ requirements:
 ~/.aws:
 	[ -d ~/.aws ] || mkdir -p ~/.aws
 
-cli: requirements ~/.aws
-	docker run -it --rm -v ~/.aws:/home/aws-user/.aws -v $(PWD):/mnt -w /mnt $(DOCKER_IMAGE)
+~/.gitconfig:
+	[ -f ~/.gitconfig ] || touch ~/.gitconfig
 
-gui: requirements osx-display ~/.aws
-	docker run --rm -tie DISPLAY=$(MAKE_DISPLAY) -v ~/.aws:/home/aws-user/.aws -v /tmp/.X11-unix:/tmp/.X11-unix -v $(PWD):/mnt -w /mnt $(DOCKER_IMAGE) code -w /mnt
+cli: build ~/.aws ~/.gitconfig
+	docker run -it --rm \
+	-v ~/.gitconfig:/home/aws-user/.gitconfig \
+	-v ~/.aws:/home/aws-user/.aws \
+	-v $(PWD):/mnt \
+	-w /mnt aws-tools
+
+gui: build osx-display ~/.aws ~/.gitconfig
+	docker run --rm -tie DISPLAY=$(MAKE_DISPLAY) \
+	-v ~/.gitconfig:/home/aws-user/.gitconfig \
+	-v ~/.aws:/home/aws-user/.aws \
+	-v /tmp/.X11-unix:/tmp/.X11-unix \
+	-v $(PWD):/mnt \
+	-w /mnt aws-tools code -w /mnt
 
 osx-display:
 	set -ex; if [ "$(OS_KERNEL)" = 'Darwin' ]; then \

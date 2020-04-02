@@ -6,7 +6,7 @@ else
 	MAKE_DISPLAY := $(DISPLAY)
 endif
 
-.PHONY: build clean cli gui help osx-display requirements test ~/.aws
+.PHONY: build clean cli gui help osx-display requirements test ~/.aws ~/.gitconfig
 
 help:
 	@echo 'The following make commands are available'
@@ -25,11 +25,23 @@ requirements:
 ~/.aws:
 	[ -d ~/.aws ] || mkdir -p ~/.aws
 
-cli: build ~/.aws
-	docker run -it --rm -v ~/.aws:/home/aws-user/.aws -v $(PWD):/mnt -w /mnt aws-tools
+~/.gitconfig:
+	[ -f ~/.gitconfig ] || touch ~/.gitconfig
 
-gui: build osx-display ~/.aws
-	docker run --rm -tie DISPLAY=$(MAKE_DISPLAY) -v ~/.aws:/home/aws-user/.aws -v /tmp/.X11-unix:/tmp/.X11-unix -v $(PWD):/mnt -w /mnt aws-tools code -w /mnt
+cli: build ~/.aws ~/.gitconfig
+	docker run -it --rm \
+	-v ~/.gitconfig:/home/aws-user/.gitconfig \
+	-v ~/.aws:/home/aws-user/.aws \
+	-v $(PWD):/mnt \
+	-w /mnt aws-tools
+
+gui: build osx-display ~/.aws ~/.gitconfig
+	docker run --rm -tie DISPLAY=$(MAKE_DISPLAY) \
+	-v ~/.gitconfig:/home/aws-user/.gitconfig \
+	-v ~/.aws:/home/aws-user/.aws \
+	-v /tmp/.X11-unix:/tmp/.X11-unix \
+	-v $(PWD):/mnt \
+	-w /mnt aws-tools code -w /mnt
 
 build: requirements
 	docker build . -t aws-tools
