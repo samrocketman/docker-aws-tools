@@ -15,8 +15,8 @@ Running `make` without arguments will give you the following usage.
 
 ```
 The following make commands are available
-    make cli   - CLI development environment.
-    make gui   - shows a VS Code (requires X11 or XQuartz on Mac).
+    make cli   - shows a CLI.
+    make gui   - shows a VS Code editor (requires X11 or XQuartz on Mac).
     make test  - runs infra tests against the aws-tools docker image.
     make clean - Removes docker image created.
 ```
