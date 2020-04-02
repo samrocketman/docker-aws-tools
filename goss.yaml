@@ -1,0 +1,93 @@
+file:
+  /etc/sudoers.d/wheel:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains:
+    - '%wheel'
+    - 'ALL = (ALL) NOPASSWD: ALL'
+  /etc/sysconfig/i18n:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: ['"LANG=en_US.UTF-8"']
+  /usr/bin/code:
+    exists: true
+    mode: "0777"
+    owner: root
+    group: root
+    linked-to: /usr/share/code/bin/code
+    filetype: symlink
+    contains: []
+  /usr/local/bin/aws:
+    exists: true
+    mode: "0755"
+    owner: aws-user
+    group: aws-user
+    filetype: file
+    contains: []
+  /usr/local/bin/cdk:
+    exists: true
+    mode: "0777"
+    owner: aws-user
+    group: aws-user
+    linked-to: /etc/alternatives/cdk
+    filetype: symlink
+    contains: []
+  /usr/local/bin/dumb-init:
+    exists: true
+    mode: "0755"
+    owner: aws-user
+    group: aws-user
+    filetype: file
+    contains: []
+  /usr/local/bin/goss:
+    exists: true
+    mode: "0755"
+    owner: aws-user
+    group: aws-user
+    filetype: file
+    contains: []
+  /usr/local/bin/node:
+    exists: true
+    mode: "0777"
+    owner: aws-user
+    group: aws-user
+    linked-to: /etc/alternatives/node
+    filetype: symlink
+    contains: []
+  /usr/local/bin/npm:
+    exists: true
+    mode: "0777"
+    owner: aws-user
+    group: aws-user
+    linked-to: /etc/alternatives/npm
+    filetype: symlink
+    contains: []
+  /usr/local/bin/npx:
+    exists: true
+    mode: "0777"
+    owner: aws-user
+    group: aws-user
+    linked-to: /etc/alternatives/npx
+    filetype: symlink
+    contains: []
+package:
+  code:
+    installed: true
+  git:
+    installed: true
+user:
+  aws-user:
+    exists: true
+    uid: 1000
+    gid: 1000
+    groups:
+    - aws-user
+    - wheel
+    home: /home/aws-user
+    shell: /bin/bash

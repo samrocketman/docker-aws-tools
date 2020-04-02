@@ -1,0 +1,7 @@
+language: shell
+services:
+  - docker
+branches:
+  only:
+    - master
+script: make test
