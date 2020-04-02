@@ -4,4 +4,5 @@ services:
 branches:
   only:
     - master
+install: type -p docker
 script: make test
