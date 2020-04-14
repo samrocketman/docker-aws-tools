@@ -31,14 +31,10 @@ requirements:
 ~/.ssh:
 	[ -d ~/.ssh ] || ( mkdir -p ~/.ssh; chmod 700 ~/.ssh )
 
-cli: build ~/.aws ~/.gitconfig ~/.ssh
-	docker run -it --rm \
-		-v ~/.ssh:/home/aws-user/.ssh \
-		-v ~/.gitconfig:/home/aws-user/.gitconfig \
-		-v ~/.aws:/home/aws-user/.aws \
-		-v $(PWD):/mnt \
-		-w /mnt aws-tools
-
+CMD := code -w /mnt
+# call gui as a target but unset CMD variable
+cli: CMD =
+cli: gui
 gui: build osx-display ~/.aws ~/.gitconfig ~/.ssh
 	docker run --rm -tie DISPLAY=$(MAKE_DISPLAY) \
 		-v ~/.ssh:/home/aws-user/.ssh \
@@ -46,7 +42,7 @@ gui: build osx-display ~/.aws ~/.gitconfig ~/.ssh
 		-v ~/.aws:/home/aws-user/.aws \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		-v $(PWD):/mnt \
-		-w /mnt aws-tools code -w /mnt
+		-w /mnt aws-tools $(CMD)
 
 build: requirements
 	docker build . -t aws-tools

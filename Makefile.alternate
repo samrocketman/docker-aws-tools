@@ -7,15 +7,19 @@ else
 	MAKE_DISPLAY := $(DISPLAY)
 endif
 
-.PHONY: cli gui help osx-display requirements test ~/.aws ~/.gitconfig ~/.ssh
+.PHONY: cli gui help osx-display requirements test ~/.aws ~/.gitconfig ~/.ssh ~/.aws-tools-config
 
 help:
 	@echo 'The following make commands are available'
 	@echo '    make cli   - shows a CLI.'
 	@echo '    make gui   - shows a VS Code editor (requires X11 or XQuartz on Mac).'
+	@echo '    make clean - delete VS Code configuration from ~/.aws-tools-config'
 
 requirements:
 	@/bin/bash -lc 'type docker' > /dev/null || (echo 'ERROR: Docker needs to be installed.  If on Mac OS X, install Docker for Mac.' >&2; false)
+
+~/.aws-tools-config:
+	[ -d ~/.aws-tools-config ] || mkdir -p ~/.aws-tools-config/config ~/.aws-tools-config/vscode
 
 ~/.aws:
 	[ -d ~/.aws ] || mkdir -p ~/.aws
@@ -26,22 +30,18 @@ requirements:
 ~/.ssh:
 	[ -d ~/.ssh ] || ( mkdir -p ~/.ssh; chmod 700 ~/.ssh )
 
-cli: requirements ~/.aws ~/.gitconfig ~/.ssh
-	docker run -it --rm \
-		-v ~/.ssh:/home/aws-user/.ssh \
-		-v ~/.gitconfig:/home/aws-user/.gitconfig \
-		-v ~/.aws:/home/aws-user/.aws \
-		-v $(PWD):/mnt \
-		-w /mnt aws-tools
-
-gui: requirements osx-display ~/.aws ~/.gitconfig ~/.ssh
+CMD := code -w /mnt
+# call gui as a target but unset CMD variable
+cli: CMD =
+cli: gui
+gui: osx-display ~/.aws ~/.gitconfig ~/.ssh
 	docker run --rm -tie DISPLAY=$(MAKE_DISPLAY) \
 		-v ~/.ssh:/home/aws-user/.ssh \
 		-v ~/.gitconfig:/home/aws-user/.gitconfig \
 		-v ~/.aws:/home/aws-user/.aws \
 		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		-v $(PWD):/mnt \
-		-w /mnt aws-tools code -w /mnt
+		-w /mnt aws-tools $(CMD)
 
 osx-display:
 	set -ex; if [ "$(OS_KERNEL)" = 'Darwin' ]; then \

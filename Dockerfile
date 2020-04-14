@@ -18,7 +18,7 @@ openssl-devel psmisc python3 rsyslog sudo wget which vim man git; \
 dnf install -y glibc-locale-source glibc-langpack-en intltool; \
 localedef -i en_US -f UTF-8 en_US.UTF-8; \
 tee /etc/sysconfig/i18n <<<'"LANG=en_US.UTF-8"'; \
-yum clean all; \
+dnf clean all; \
 rm -rf /tmp/*
 
 ################################################################################
@@ -89,6 +89,14 @@ npm install -g aws-cdk; \
 update-alternatives --install /usr/local/bin/cdk cdk /opt/node/bin/cdk 1; \
 update-alternatives --set cdk /opt/node/bin/cdk; \
 rm -rf /tmp/*
+
+################################################################################
+# Install system fonts; FreeMono is the font I use
+RUN set -ex; \
+dnf install -y gnu-free-mono-fonts; \
+dnf clean all; \
+rm -rf /tmp/*
+
 
 ################################################################################
 # Create and configure user account
