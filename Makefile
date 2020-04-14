@@ -1,12 +1,6 @@
-OS_KERNEL := $(shell uname -s)
-ifeq ($(OS_KERNEL), Darwin)
-	HOST_IP := $(shell ifconfig en0 | awk '$$1 == "inet" { print $$2 }')
-	MAKE_DISPLAY := $(HOST_IP):0
-else
-	MAKE_DISPLAY := $(DISPLAY)
-endif
+include Makefile.alternate
 
-.PHONY: build clean cli gui help osx-display requirements test ~/.aws ~/.gitconfig ~/.ssh
+.PHONY: build clean help requirements test
 
 help:
 	@echo 'The following make commands are available'
@@ -22,38 +16,8 @@ clean:
 requirements:
 	@/bin/bash -lc 'type docker' > /dev/null || (echo 'ERROR: Docker needs to be installed.  If on Mac OS X, install Docker for Mac.' >&2; false)
 
-~/.aws:
-	[ -d ~/.aws ] || mkdir -p ~/.aws
-
-~/.gitconfig:
-	[ -f ~/.gitconfig ] || touch ~/.gitconfig
-
-~/.ssh:
-	[ -d ~/.ssh ] || ( mkdir -p ~/.ssh; chmod 700 ~/.ssh )
-
-CMD := code -w /mnt
-# call gui as a target but unset CMD variable
-cli: CMD =
-cli: gui
-gui: build osx-display ~/.aws ~/.gitconfig ~/.ssh
-	docker run --rm -tie DISPLAY=$(MAKE_DISPLAY) \
-		-v ~/.ssh:/home/aws-user/.ssh \
-		-v ~/.gitconfig:/home/aws-user/.gitconfig \
-		-v ~/.aws:/home/aws-user/.aws \
-		-v /tmp/.X11-unix:/tmp/.X11-unix \
-		-v $(PWD):/mnt \
-		-w /mnt aws-tools $(CMD)
-
 build: requirements
 	docker build . -t aws-tools
 
 test: build
 	docker run --rm -iu root aws-tools /usr/local/bin/goss -g - validate < goss.yaml
-
-osx-display:
-	set -ex; if [ "$(OS_KERNEL)" = 'Darwin' ]; then \
-		type -p XQuartz > /dev/null || (echo 'ERROR: XQuartz must be installed.' >&2; false); \
-		open -a XQuartz; \
-		defaults write org.macosforge.xquartz.X11 nolisten_tcp -boolean false; \
-		xhost +$(HOST_IP); \
-	fi
