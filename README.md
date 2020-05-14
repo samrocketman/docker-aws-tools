@@ -49,9 +49,10 @@ AWS Tools Provided:
 
 | Latest version | Additional Information |
 | -------------- | ---------------------- |
-| ![CDK current version](https://img.shields.io/node/v/aws-cdk?label=aws-cdk)        | [AWS CDK][cdk] |
-| ![CLI current version](https://img.shields.io/pypi/v/awscli?label=awscli)          | [AWS CLI][cli] |
-| ![cfn-lint current version](https://img.shields.io/pypi/v/cfn-lint?label=cfn-lint) | [cfn-lint][lint] - a CloudFormation stack linter. |
+| ![CDK current version](https://img.shields.io/node/v/aws-cdk?label=aws-cdk)              | [AWS CDK][cdk] |
+| ![CLI current version](https://img.shields.io/pypi/v/awscli?label=awscli)                | [AWS CLI][cli] |
+| ![cfn-lint current version](https://img.shields.io/pypi/v/cfn-lint?label=cfn-lint)       | [cfn-lint][lint] - a CloudFormation stack linter. |
+| ![serverless current version](https://img.shields.io/node/v/serverless?label=serverless) | [serverless framework][serverless] |
 
 # aws-tools command alias
 
@@ -111,4 +112,5 @@ Q: Can't connect to X session from Mac.
 [js]: https://nodejs.org/
 [lint]: https://github.com/aws-cloudformation/cfn-python-lint
 [py]: https://www.python.org/
+[serverless]: https://www.serverless.com/framework/docs/
 [xquartz-slowness]: https://gitlab.freedesktop.org/xorg/xserver/-/issues/188

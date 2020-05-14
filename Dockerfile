@@ -85,9 +85,14 @@ for x in node npm npx; do \
 update-alternatives --install /usr/local/bin/"$x" "$x" /opt/node/bin/"$x" 1; \
 update-alternatives --set "$x" /opt/node/bin/"$x"; \
 done; \
-npm install -g aws-cdk; \
-update-alternatives --install /usr/local/bin/cdk cdk /opt/node/bin/cdk 1; \
-update-alternatives --set cdk /opt/node/bin/cdk; \
+npm install -g aws-cdk serverless; \
+cd /opt/node/bin; \
+for x in cdk serverless; do \
+  if [ ! -e /usr/local/bin/"$x" ]; then \
+    update-alternatives --install /usr/local/bin/"$x" "$x" /opt/node/bin/"$x" 1; \
+    update-alternatives --set "$x" /opt/node/bin/"$x"; \
+  fi; \
+done; \
 rm -rf /tmp/*
 
 ################################################################################
