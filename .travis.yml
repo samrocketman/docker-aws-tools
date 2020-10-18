@@ -3,6 +3,6 @@ services:
   - docker
 branches:
   only:
-    - master
+    - main
 install: type -p docker
 script: make test
